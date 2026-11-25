@@ -1,0 +1,12 @@
+{
+  "name": "dual-grid-tileset-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dual-grid autotiling with procedurally painted pixel-art tiles",
+  "scripts": {
+    "docs": "node tools/build-docs.mjs",
+    "serve": "node tools/serve.mjs 8000"
+  },
+  "license": "MIT"
+}

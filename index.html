@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dual-Grid Tileset Lab</title>
+    <meta name="description" content="Dual-grid autotiling demo with procedurally painted pixel-art tiles." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="docs/images/favicon.png" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <h1>Dual-Grid Tileset Lab</h1>
+        <p data-i18n="subtitle"></p>
+      </div>
+      <nav>
+        <button id="lang" class="chip">EN</button>
+        <a class="chip" id="readmeLink" href="https://github.com/kumi0708/dual-grid-tileset-lab#readme" data-i18n="readme"></a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="stage-wrap">
+        <div class="stage-toolbar">
+          <div class="seg" role="radiogroup">
+            <button data-mode="dual" class="on" data-i18n="modeDual"></button>
+            <button data-mode="raw" data-i18n="modeRaw"></button>
+          </div>
+          <span id="stats" class="stats"></span>
+        </div>
+        <div class="stage" id="stage">
+          <canvas id="view"></canvas>
+          <div id="loading" class="loading"><span data-i18n="generating"></span></div>
+        </div>
+        <div class="explain">
+          <figure>
+            <img src="docs/images/grids.png" alt="data grid and render grid" />
+            <figcaption data-i18n="ex1"></figcaption>
+          </figure>
+          <figure>
+            <img src="docs/images/mask-table.png" alt="16 masks" />
+            <figcaption data-i18n="ex2"></figcaption>
+          </figure>
+          <figure>
+            <img src="docs/images/layers.png" alt="layer stack" />
+            <figcaption data-i18n="ex3"></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="panel">
+          <h2 data-i18n="paint"></h2>
+          <div id="palette" class="palette"></div>
+          <div class="row">
+            <span data-i18n="brush"></span>
+            <div class="seg small" id="brush">
+              <button data-size="1" class="on">1</button>
+              <button data-size="2">2</button>
+              <button data-size="3">3</button>
+            </div>
+          </div>
+          <p class="hint" data-i18n="hintPaint"></p>
+          <div class="row buttons">
+            <button id="random" class="btn" data-i18n="random"></button>
+            <button id="clear" class="btn ghost" data-i18n="clear"></button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 data-i18n="inspector"></h2>
+          <div class="inspector">
+            <canvas id="inspectCorners" width="132" height="132"></canvas>
+            <span class="arrow">→</span>
+            <canvas id="inspectTile" width="128" height="128"></canvas>
+          </div>
+          <div id="inspectText" class="mono"></div>
+          <p class="hint" id="inspectHint" data-i18n="inspectHint"></p>
+        </div>
+
+        <div class="panel">
+          <h2 data-i18n="atlas"></h2>
+          <div class="row">
+            <span data-i18n="variant"></span>
+            <div class="seg small" id="variant">
+              <button data-v="0" class="on">0</button>
+              <button data-v="1">1</button>
+              <button data-v="2">2</button>
+              <button data-v="3">3</button>
+            </div>
+          </div>
+          <canvas id="atlasView" width="276" height="276"></canvas>
+          <p class="hint" data-i18n="atlasHint"></p>
+          <button id="download" class="btn ghost" data-i18n="download"></button>
+        </div>
+
+        <div class="panel">
+          <h2 data-i18n="view"></h2>
+          <label><input type="checkbox" id="optData" /> <span data-i18n="showData"></span></label>
+          <label><input type="checkbox" id="optRender" /> <span data-i18n="showRender"></span></label>
+          <label><input type="checkbox" id="optMask" /> <span data-i18n="showMask"></span></label>
+          <label><input type="checkbox" id="optInspect" checked /> <span data-i18n="showInspect"></span></label>
+          <label><input type="checkbox" id="optDecor" checked /> <span data-i18n="showDecor"></span></label>
+          <label><input type="checkbox" id="optAnim" checked /> <span data-i18n="animate"></span></label>
+          <h3 data-i18n="layers"></h3>
+          <div id="layers" class="layers"></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      <span>Technique: dual-grid autotiling · Art: 100% procedural (no image files)</span>
+      <a href="https://www.spritecook.ai/blog/dual-grid-tilesets-explained">Reference article</a>
+    </footer>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

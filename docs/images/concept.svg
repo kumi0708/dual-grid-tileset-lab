@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <pattern id="water" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#1d4d93"/>
+      <rect x="1" y="2" width="3" height="1" fill="#3d92d6"/>
+    </pattern>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffb347"/>
+    </marker>
+  </defs>
+  <rect width="960" height="420" rx="18" fill="#0d1220"/>
+
+  <!-- ===================== Left: single grid / blob ===================== -->
+  <text x="40" y="44" fill="#e6ecf7" font-size="20" font-weight="700">Classic autotile (single grid)</text>
+  <text x="40" y="68" fill="#8f9bb6" font-size="14">1 cell = 1 tile. The tile must look at its 8 neighbours.</text>
+  <g transform="translate(90,95)">
+    <g stroke="#2a3552" stroke-width="2">
+      <rect x="0" y="0" width="70" height="70" fill="#56a845"/>
+      <rect x="70" y="0" width="70" height="70" fill="#56a845"/>
+      <rect x="140" y="0" width="70" height="70" fill="url(#water)"/>
+      <rect x="0" y="70" width="70" height="70" fill="#56a845"/>
+      <rect x="70" y="70" width="70" height="70" fill="#6dbe4f"/>
+      <rect x="140" y="70" width="70" height="70" fill="#56a845"/>
+      <rect x="0" y="140" width="70" height="70" fill="url(#water)"/>
+      <rect x="70" y="140" width="70" height="70" fill="#56a845"/>
+      <rect x="140" y="140" width="70" height="70" fill="#56a845"/>
+    </g>
+    <rect x="70" y="70" width="70" height="70" fill="none" stroke="#ffb347" stroke-width="4"/>
+    <g fill="#ffb347" font-size="13" font-weight="700" text-anchor="middle">
+      <text x="35" y="40">NW</text><text x="105" y="40">N</text><text x="175" y="40" fill="#fff">NE</text>
+      <text x="35" y="110">W</text><text x="105" y="110" fill="#1a1205">?</text><text x="175" y="110">E</text>
+      <text x="35" y="180" fill="#fff">SW</text><text x="105" y="180">S</text><text x="175" y="180">SE</text>
+    </g>
+  </g>
+  <g font-size="15" fill="#e6ecf7">
+    <text x="330" y="140">8 neighbours</text>
+    <text x="330" y="166" fill="#8f9bb6">→ 2⁸ = 256 cases</text>
+    <text x="330" y="192" fill="#8f9bb6">→ 47 unique tiles</text>
+    <text x="330" y="218" fill="#8f9bb6">   ("blob" set)</text>
+    <text x="330" y="256" fill="#ff8a8a">+ rule tables to</text>
+    <text x="330" y="278" fill="#ff8a8a">  collapse cases</text>
+  </g>
+
+  <line x1="478" y1="40" x2="478" y2="380" stroke="#2a3552" stroke-width="2" stroke-dasharray="6 6"/>
+
+  <!-- ===================== Right: dual grid ===================== -->
+  <text x="508" y="44" fill="#e6ecf7" font-size="20" font-weight="700">Dual grid</text>
+  <text x="508" y="68" fill="#8f9bb6" font-size="14">Tiles sit between cells. Each one reads exactly 4 corners.</text>
+  <g transform="translate(540,100)">
+    <!-- 2x2 data cells -->
+    <rect x="0" y="0" width="120" height="120" fill="#56a845"/>
+    <rect x="120" y="0" width="120" height="120" fill="#56a845"/>
+    <rect x="0" y="120" width="120" height="120" fill="#56a845"/>
+    <rect x="120" y="120" width="120" height="120" fill="url(#water)"/>
+    <g fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="7 5" opacity="0.85">
+      <rect x="0" y="0" width="240" height="240"/>
+      <line x1="120" y1="0" x2="120" y2="240"/>
+      <line x1="0" y1="120" x2="240" y2="120"/>
+    </g>
+    <!-- render tile centred on the shared corner -->
+    <rect x="60" y="60" width="120" height="120" fill="#ffb347" fill-opacity="0.12" stroke="#ffb347" stroke-width="4"/>
+    <!-- corner samples at data cell centres -->
+    <g font-size="15" font-weight="800" text-anchor="middle">
+      <circle cx="60" cy="60" r="17" fill="#ffb347" stroke="#fff" stroke-width="2"/><text x="60" y="65" fill="#1a1205">1</text>
+      <circle cx="180" cy="60" r="17" fill="#ffb347" stroke="#fff" stroke-width="2"/><text x="180" y="65" fill="#1a1205">2</text>
+      <circle cx="60" cy="180" r="17" fill="#ffb347" stroke="#fff" stroke-width="2"/><text x="60" y="185" fill="#1a1205">4</text>
+      <circle cx="180" cy="180" r="17" fill="#0b0f1b" stroke="#fff" stroke-width="2"/><text x="180" y="185" fill="#8f9bb6">8</text>
+    </g>
+    <rect x="78" y="88" width="84" height="22" rx="5" fill="#0d1220" fill-opacity="0.85"/><text x="120" y="104" text-anchor="middle" fill="#ffb347" font-size="13" font-weight="700">render tile</text>
+  </g>
+  <g font-size="15" fill="#e6ecf7">
+    <text x="808" y="140">4 corners</text>
+    <text x="808" y="166" fill="#8f9bb6">→ 2⁴ = 16 cases</text>
+    <text x="808" y="192" fill="#8f9bb6">→ 16 tiles</text>
+    <text x="808" y="218" fill="#9fe6a0">no rules,</text>
+    <text x="808" y="240" fill="#9fe6a0">a direct lookup</text>
+  </g>
+  <rect x="508" y="358" width="420" height="40" rx="10" fill="#151c2e" stroke="#2a3552"/>
+  <text x="718" y="384" text-anchor="middle" fill="#ffd27a" font-size="16" font-family="ui-monospace, Menlo, monospace">mask = 1 + 2 + 4 = 7  →  tile #7</text>
+  <text x="40" y="352" fill="#8f9bb6" font-size="14">White dashed = data grid (what you paint)</text><text x="40" y="374" fill="#8f9bb6" font-size="14">Orange = render grid (what you draw)</text>
+</svg>

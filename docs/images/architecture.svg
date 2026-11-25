@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 380" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6fd3ff"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffb347"/>
+    </marker>
+  </defs>
+  <rect width="980" height="380" rx="18" fill="#0d1220"/>
+  <style>
+    .box { fill: #151c2e; stroke: #2a3552; stroke-width: 2; }
+    .t { fill: #e6ecf7; font-size: 14px; font-weight: 700; }
+    .s { fill: #8f9bb6; font-size: 12px; }
+    .m { fill: #ffd27a; font-size: 11px; font-family: ui-monospace, Menlo, monospace; }
+  </style>
+
+  <text x="30" y="40" fill="#6fd3ff" font-size="17" font-weight="700">① Tile painting — once at startup (src/tilegen.js, src/terrains.js)</text>
+  <g transform="translate(30,60)">
+    <rect class="box" x="0" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="12" y="26">Corner field</text>
+    <text class="s" x="12" y="48">smoothstep bilinear</text>
+    <text class="s" x="12" y="66">blend of 4 bits</text>
+    <text class="m" x="12" y="88">cornerField()</text>
+
+    <rect class="box" x="160" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="172" y="26">+ Periodic noise</text>
+    <text class="s" x="172" y="48">period = 1 tile</text>
+    <text class="s" x="172" y="66">→ seamless edges</text>
+    <text class="m" x="172" y="88">pnoise(), vtex()</text>
+
+    <rect class="box" x="320" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="332" y="26">Threshold</text>
+    <text class="s" x="332" y="48">f &gt; 0.5 + bias</text>
+    <text class="s" x="332" y="66">= terrain shape</text>
+    <text class="m" x="332" y="88">terrainField()</text>
+
+    <rect class="box" x="480" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="492" y="26">Distance field</text>
+    <text class="s" x="492" y="48">8SSEDT on a tile</text>
+    <text class="s" x="492" y="66">+10px margin</text>
+    <text class="m" x="492" y="88">edgeData()</text>
+
+    <rect class="box" x="640" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="652" y="26">Terrain shader</text>
+    <text class="s" x="652" y="48">outline·cliff·rim</text>
+    <text class="s" x="652" y="66">shadow·foam·dither</text>
+    <text class="m" x="652" y="88">landShader()</text>
+
+    <rect class="box" x="800" y="0" width="120" height="100" rx="10" stroke="#6fd3ff"/>
+    <text class="t" x="812" y="26">Atlas</text>
+    <text class="s" x="812" y="48">16 masks ×</text>
+    <text class="s" x="812" y="66">4 variants × N fr.</text>
+    <text class="m" x="812" y="88">generateAtlas()</text>
+    <g stroke="#6fd3ff" stroke-width="2" marker-end="url(#a)">
+      <line x1="140" y1="50" x2="158" y2="50"/><line x1="300" y1="50" x2="318" y2="50"/>
+      <line x1="460" y1="50" x2="478" y2="50"/><line x1="620" y1="50" x2="638" y2="50"/>
+      <line x1="780" y1="50" x2="798" y2="50"/>
+    </g>
+  </g>
+
+  <text x="30" y="210" fill="#ffb347" font-size="17" font-weight="700">② Rendering — whenever the map changes or the water animates (src/dualgrid.js)</text>
+  <g transform="translate(30,230)">
+    <rect class="box" x="0" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="12" y="26">TileMap</text>
+    <text class="s" x="12" y="48">W×H cells, value =</text>
+    <text class="s" x="12" y="66">terrain index 0‥5</text>
+    <text class="m" x="12" y="88">map.get(x, y)</text>
+
+    <rect class="box" x="160" y="0" width="160" height="100" rx="10"/>
+    <text class="t" x="172" y="26">For (W+1)×(H+1)</text>
+    <text class="s" x="172" y="48">render tiles, for each</text>
+    <text class="s" x="172" y="66">layer L: cell ≥ L ?</text>
+    <text class="m" x="172" y="88">cornerMask(rx,ry,L)</text>
+
+    <rect class="box" x="340" y="0" width="160" height="100" rx="10"/>
+    <text class="t" x="352" y="26">Lookup</text>
+    <text class="s" x="352" y="48">mask → atlas cell,</text>
+    <text class="s" x="352" y="66">hashed variant, frame</text>
+    <text class="m" x="352" y="88">atlasRect(m,v,f)</text>
+
+    <rect class="box" x="520" y="0" width="140" height="100" rx="10"/>
+    <text class="t" x="532" y="26">Blit</text>
+    <text class="s" x="532" y="48">bottom → top layers,</text>
+    <text class="s" x="532" y="66">skip covered ones</text>
+    <text class="m" x="532" y="88">renderTerrain()</text>
+
+    <rect class="box" x="680" y="0" width="120" height="100" rx="10"/>
+    <text class="t" x="692" y="26">Decor</text>
+    <text class="s" x="692" y="48">trees/rocks on</text>
+    <text class="s" x="692" y="66">cell centres, y-sort</text>
+    <text class="m" x="692" y="88">decorations()</text>
+
+    <rect class="box" x="820" y="0" width="100" height="100" rx="10" stroke="#ffb347"/>
+    <text class="t" x="832" y="26">Present</text>
+    <text class="s" x="832" y="48">nearest-</text>
+    <text class="s" x="832" y="66">neighbour</text>
+    <text class="s" x="832" y="84">+ overlays</text>
+    <g stroke="#ffb347" stroke-width="2" marker-end="url(#b)">
+      <line x1="140" y1="50" x2="158" y2="50"/><line x1="320" y1="50" x2="338" y2="50"/>
+      <line x1="500" y1="50" x2="518" y2="50"/><line x1="660" y1="50" x2="678" y2="50"/>
+      <line x1="800" y1="50" x2="818" y2="50"/>
+    </g>
+  </g>
+</svg>
